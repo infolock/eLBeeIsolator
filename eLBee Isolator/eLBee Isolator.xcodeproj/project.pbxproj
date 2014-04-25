@@ -16,24 +16,9 @@
 		050AFA971909C3A9000B1C8A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 050AFA951909C3A9000B1C8A /* Main.storyboard */; };
 		050AFA9A1909C3A9000B1C8A /* eisoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 050AFA991909C3A9000B1C8A /* eisoViewController.m */; };
 		050AFA9C1909C3A9000B1C8A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 050AFA9B1909C3A9000B1C8A /* Images.xcassets */; };
-		050AFAA31909C3A9000B1C8A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 050AFAA21909C3A9000B1C8A /* XCTest.framework */; };
-		050AFAA41909C3A9000B1C8A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 050AFA831909C3A8000B1C8A /* Foundation.framework */; };
-		050AFAA51909C3A9000B1C8A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 050AFA871909C3A8000B1C8A /* UIKit.framework */; };
-		050AFAAD1909C3A9000B1C8A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 050AFAAB1909C3A9000B1C8A /* InfoPlist.strings */; };
-		050AFAAF1909C3A9000B1C8A /* eLBee_IsolatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 050AFAAE1909C3A9000B1C8A /* eLBee_IsolatorTests.m */; };
 		050AFABB1909CA34000B1C8A /* eLBeeIsolator.m in Sources */ = {isa = PBXBuildFile; fileRef = 050AFABA1909CA34000B1C8A /* eLBeeIsolator.m */; };
 		050AFABE1909CA8E000B1C8A /* NSObject+Nametag.m in Sources */ = {isa = PBXBuildFile; fileRef = 050AFABC1909CA8E000B1C8A /* NSObject+Nametag.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		050AFAA61909C3A9000B1C8A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 050AFA781909C3A8000B1C8A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 050AFA7F1909C3A8000B1C8A;
-			remoteInfo = "eLBee Isolator";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		050AFA801909C3A8000B1C8A /* eLBee Isolator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "eLBee Isolator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -50,11 +35,7 @@
 		050AFA981909C3A9000B1C8A /* eisoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = eisoViewController.h; sourceTree = "<group>"; };
 		050AFA991909C3A9000B1C8A /* eisoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = eisoViewController.m; sourceTree = "<group>"; };
 		050AFA9B1909C3A9000B1C8A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		050AFAA11909C3A9000B1C8A /* eLBee IsolatorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "eLBee IsolatorTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		050AFAA21909C3A9000B1C8A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		050AFAAA1909C3A9000B1C8A /* eLBee IsolatorTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "eLBee IsolatorTests-Info.plist"; sourceTree = "<group>"; };
-		050AFAAC1909C3A9000B1C8A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		050AFAAE1909C3A9000B1C8A /* eLBee_IsolatorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = eLBee_IsolatorTests.m; sourceTree = "<group>"; };
 		050AFAB91909CA34000B1C8A /* eLBeeIsolator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = eLBeeIsolator.h; sourceTree = "<group>"; };
 		050AFABA1909CA34000B1C8A /* eLBeeIsolator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = eLBeeIsolator.m; sourceTree = "<group>"; };
 		050AFABC1909CA8E000B1C8A /* NSObject+Nametag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Nametag.m"; sourceTree = "<group>"; };
@@ -72,16 +53,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		050AFA9E1909C3A9000B1C8A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				050AFAA31909C3A9000B1C8A /* XCTest.framework in Frameworks */,
-				050AFAA51909C3A9000B1C8A /* UIKit.framework in Frameworks */,
-				050AFAA41909C3A9000B1C8A /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -89,7 +60,6 @@
 			isa = PBXGroup;
 			children = (
 				050AFA891909C3A8000B1C8A /* eLBee Isolator */,
-				050AFAA81909C3A9000B1C8A /* eLBee IsolatorTests */,
 				050AFA821909C3A8000B1C8A /* Frameworks */,
 				050AFA811909C3A8000B1C8A /* Products */,
 			);
@@ -99,7 +69,6 @@
 			isa = PBXGroup;
 			children = (
 				050AFA801909C3A8000B1C8A /* eLBee Isolator.app */,
-				050AFAA11909C3A9000B1C8A /* eLBee IsolatorTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -141,24 +110,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		050AFAA81909C3A9000B1C8A /* eLBee IsolatorTests */ = {
-			isa = PBXGroup;
-			children = (
-				050AFAAE1909C3A9000B1C8A /* eLBee_IsolatorTests.m */,
-				050AFAA91909C3A9000B1C8A /* Supporting Files */,
-			);
-			path = "eLBee IsolatorTests";
-			sourceTree = "<group>";
-		};
-		050AFAA91909C3A9000B1C8A /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				050AFAAA1909C3A9000B1C8A /* eLBee IsolatorTests-Info.plist */,
-				050AFAAB1909C3A9000B1C8A /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		050AFAB81909CA2A000B1C8A /* isolator */ = {
 			isa = PBXGroup;
 			children = (
@@ -190,24 +141,6 @@
 			productReference = 050AFA801909C3A8000B1C8A /* eLBee Isolator.app */;
 			productType = "com.apple.product-type.application";
 		};
-		050AFAA01909C3A9000B1C8A /* eLBee IsolatorTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 050AFAB51909C3A9000B1C8A /* Build configuration list for PBXNativeTarget "eLBee IsolatorTests" */;
-			buildPhases = (
-				050AFA9D1909C3A9000B1C8A /* Sources */,
-				050AFA9E1909C3A9000B1C8A /* Frameworks */,
-				050AFA9F1909C3A9000B1C8A /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				050AFAA71909C3A9000B1C8A /* PBXTargetDependency */,
-			);
-			name = "eLBee IsolatorTests";
-			productName = "eLBee IsolatorTests";
-			productReference = 050AFAA11909C3A9000B1C8A /* eLBee IsolatorTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -217,11 +150,6 @@
 				CLASSPREFIX = eiso;
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Integrated Events, LLC";
-				TargetAttributes = {
-					050AFAA01909C3A9000B1C8A = {
-						TestTargetID = 050AFA7F1909C3A8000B1C8A;
-					};
-				};
 			};
 			buildConfigurationList = 050AFA7B1909C3A8000B1C8A /* Build configuration list for PBXProject "eLBee Isolator" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -237,7 +165,6 @@
 			projectRoot = "";
 			targets = (
 				050AFA7F1909C3A8000B1C8A /* eLBee Isolator */,
-				050AFAA01909C3A9000B1C8A /* eLBee IsolatorTests */,
 			);
 		};
 /* End PBXProject section */
@@ -250,14 +177,6 @@
 				050AFA9C1909C3A9000B1C8A /* Images.xcassets in Resources */,
 				050AFA8E1909C3A8000B1C8A /* InfoPlist.strings in Resources */,
 				050AFA971909C3A9000B1C8A /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		050AFA9F1909C3A9000B1C8A /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				050AFAAD1909C3A9000B1C8A /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,23 +195,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		050AFA9D1909C3A9000B1C8A /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				050AFAAF1909C3A9000B1C8A /* eLBee_IsolatorTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		050AFAA71909C3A9000B1C8A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 050AFA7F1909C3A8000B1C8A /* eLBee Isolator */;
-			targetProxy = 050AFAA61909C3A9000B1C8A /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		050AFA8C1909C3A8000B1C8A /* InfoPlist.strings */ = {
@@ -309,14 +212,6 @@
 				050AFA961909C3A9000B1C8A /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		050AFAAB1909C3A9000B1C8A /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				050AFAAC1909C3A9000B1C8A /* en */,
-			);
-			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -418,46 +313,6 @@
 			};
 			name = Release;
 		};
-		050AFAB61909C3A9000B1C8A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/eLBee Isolator.app/eLBee Isolator";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "eLBee Isolator/eLBee Isolator-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "eLBee IsolatorTests/eLBee IsolatorTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		050AFAB71909C3A9000B1C8A /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/eLBee Isolator.app/eLBee Isolator";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "eLBee Isolator/eLBee Isolator-Prefix.pch";
-				INFOPLIST_FILE = "eLBee IsolatorTests/eLBee IsolatorTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -477,14 +332,7 @@
 				050AFAB41909C3A9000B1C8A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-		};
-		050AFAB51909C3A9000B1C8A /* Build configuration list for PBXNativeTarget "eLBee IsolatorTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				050AFAB61909C3A9000B1C8A /* Debug */,
-				050AFAB71909C3A9000B1C8A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
