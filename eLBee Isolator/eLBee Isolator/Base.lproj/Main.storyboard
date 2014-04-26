@@ -20,8 +20,8 @@
                                 <rect key="frame" x="237" y="20" width="83" height="47"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="47" id="8Gr-5w-Wxt"/>
-                                    <constraint firstAttribute="width" constant="83" id="v0F-74-e3a"/>
+                                    <constraint firstAttribute="width" constant="83" id="KxX-8e-j6t"/>
+                                    <constraint firstAttribute="height" constant="47" id="ToH-ZT-jyS"/>
                                 </constraints>
                                 <state key="normal" title="hide">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -30,7 +30,7 @@
                                     <action selector="hideBtnTapped:" destination="LUl-VL-hWC" eventType="touchUpInside" id="Vmb-fG-r4D"/>
                                 </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="rJy-PZ-YFJ">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="rJy-PZ-YFJ">
                                 <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -70,10 +70,15 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="pAA-ch-bLH" secondAttribute="trailing" id="IPB-NA-TFA"/>
-                            <constraint firstItem="pAA-ch-bLH" firstAttribute="top" secondItem="YG9-uB-TOl" secondAttribute="bottom" id="iwa-9v-VDV"/>
+                            <constraint firstItem="pAA-ch-bLH" firstAttribute="top" secondItem="I8d-em-ra3" secondAttribute="top" constant="20" id="FIN-w5-cDW"/>
+                            <constraint firstItem="rJy-PZ-YFJ" firstAttribute="top" secondItem="I8d-em-ra3" secondAttribute="top" constant="20" id="YCl-aW-Xq5"/>
+                            <constraint firstItem="BMX-W5-vU4" firstAttribute="top" secondItem="rJy-PZ-YFJ" secondAttribute="bottom" id="ZJs-OZ-fOz"/>
+                            <constraint firstItem="rJy-PZ-YFJ" firstAttribute="leading" secondItem="I8d-em-ra3" secondAttribute="leading" id="mjp-Vh-dfh"/>
+                            <constraint firstAttribute="trailing" secondItem="rJy-PZ-YFJ" secondAttribute="trailing" id="qJG-ih-Plw"/>
+                            <constraint firstAttribute="trailing" secondItem="pAA-ch-bLH" secondAttribute="trailing" id="wm6-Ar-bH3"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <connections>
                         <outlet property="hideBtn" destination="pAA-ch-bLH" id="m01-SW-XI8"/>
                         <outlet property="tableView" destination="rJy-PZ-YFJ" id="N91-bG-D7r"/>
@@ -81,7 +86,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bqh-g8-j9G" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="265" y="-248"/>
+            <point key="canvasLocation" x="-224" y="-206"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

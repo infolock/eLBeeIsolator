@@ -65,6 +65,7 @@ typedef void ( ^eLBeeIsolatorDidIsolateCompletion)(BOOL itemIsBeingIsolated);
 // View
 -(void)isolateView:(UIView *)view;
 
+
 // Cell
 -(void)isolateCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath inTableView:(UITableView *)tableView;
 -(void)isolateCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;

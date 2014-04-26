@@ -19,6 +19,7 @@ static NSString * const OVERLAY_VIEW_NAMETAG = @"isolatorOverlay";
 @property (nonatomic, copy) configureCellCompletion configureCellBlock;
 
 @property (nonatomic, weak) IBOutlet UIButton *hideBtn;
+@property (nonatomic, weak) IBOutlet UISwitch *showOverlaySwitch;
 
 @end
 
@@ -31,7 +32,7 @@ static NSString * const OVERLAY_VIEW_NAMETAG = @"isolatorOverlay";
     [self initIsolator];
 
     // Setup some dummy stuff..
-    self.items = @[ @"Item 1", @"Item 2", @"Item 3", @"Item 4" ];
+    self.items = @[ @"Item 1", @"Item 2", @"Item 3", @"Item 4", @"Item 5", @"Item 6", @"Item 7", @"Item 8", @"Item 9", @"Item 10", @"Item 11", @"Item 12", @"Item 13", @"Item 14", @"Item 15", @"Item 16", @"Item 17", @"Item 18", @"Item 19", @"Item 20", ];
 
     [self setupCellCompletion];
 
@@ -60,15 +61,9 @@ static NSString * const OVERLAY_VIEW_NAMETAG = @"isolatorOverlay";
 
             CGFloat toAlpha = 0.1f;
 
-            if( itemIsBeingIsolated ) {
-
-                [weakSelf addOverlay];
-
-            } else {
+            if( !itemIsBeingIsolated ) {
                 [weakSelf.view bringSubviewToFront:weakSelf.tableView];
-
                 toAlpha = 1.0f;
-                [weakSelf removeOverlay];
             }
 
             [UIView animateWithDuration:0.3 animations:^{
@@ -79,13 +74,6 @@ static NSString * const OVERLAY_VIEW_NAMETAG = @"isolatorOverlay";
 
     self.isolator.didAnimateBlock = ^( BOOL itemIsBeingIsolated ) {
         NSLog( @"did animate isolated view" );
-
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if( !itemIsBeingIsolated ) {
-                [weakSelf removeOverlay];
-            }
-        });
-
     };
 
     self.isolator.completionBlock = ^(BOOL itemIsBeingIsolated) {
@@ -110,6 +98,8 @@ static NSString * const OVERLAY_VIEW_NAMETAG = @"isolatorOverlay";
 
     if( gestureRecognizer.state == UIGestureRecognizerStateBegan ) {
 
+        [self addOverlay];
+
         CGPoint point = [gestureRecognizer locationInView:gestureRecognizer.view];
         NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
@@ -126,28 +116,39 @@ static NSString * const OVERLAY_VIEW_NAMETAG = @"isolatorOverlay";
     NSLog( @"Hide Button Tapped.  Deisolating current Item.." );
 
     if( self.isolator ) {
+        [self removeOverlay];
+
         [self.isolator deisolateCurrentViewAnimated:NO];
     }
 }
 
 
 #pragma mark -
-#pragma mark Overlay View
+#pragma mark Overlay
 #pragma mark -
 
 -(void)addOverlay {
 
-    UIView *overlayView = [UIView overlayViewWithFrame:self.view.bounds withName:OVERLAY_VIEW_NAMETAG];
-    overlayView.alpha = 0.8;
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
 
-    [self.view addSubview:overlayView];
+    if( [self.showOverlaySwitch isOn] ) {
+
+        UIView *overlayView = [UIView overlayViewWithFrame:self.view.bounds withName:OVERLAY_VIEW_NAMETAG];
+        [self.view addSubview:overlayView];
+        [self.view bringSubviewToFront:overlayView];
+    }
 }
 
 -(void)removeOverlay {
 
-    UIView *overlayView = [self.view viewNamed:OVERLAY_VIEW_NAMETAG];
-    if( overlayView ) {
-        [overlayView removeFromSuperview];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+
+    if( [self.showOverlaySwitch isOn] ) {
+
+        UIView *overlayView = [self.view viewNamed:OVERLAY_VIEW_NAMETAG];
+        if( overlayView ) {
+            [overlayView removeFromSuperview];
+        }
     }
 }
 

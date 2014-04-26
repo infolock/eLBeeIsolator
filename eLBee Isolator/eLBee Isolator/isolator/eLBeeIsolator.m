@@ -93,16 +93,22 @@ static CGFloat const ISOLATOR_ANIMATION_DELAY = 0;
 
 @implementation UIView (OverlayView)
 
-+(UIView *)overlayViewWithFrame:(CGRect)overlayFrame {
-    UIView *overlayView;
-    return overlayView;
-}
-
 +(UIView *)overlayViewWithFrame:(CGRect)overlayFrame withName:(NSString *)viewName {
-    UIView *overlayView;
-    return overlayView;
+
+    UIView *view = [[UIView alloc] initWithFrame:overlayFrame];
+    view.layer.backgroundColor = [UIColor colorWithWhite:0.1f alpha:.5f].CGColor;
+    view.alpha = 0.85f;
+
+    view.nametag = viewName;
+
+    return view;
 }
 
+
++(UIView *)overlayViewWithFrame:(CGRect)overlayFrame {
+    static NSString *overlayName = @"_overlay";
+    return [[self class] overlayViewWithFrame:overlayFrame withName:overlayName];
+}
 
 @end
 
