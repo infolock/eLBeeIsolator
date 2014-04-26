@@ -3,9 +3,15 @@ eLBeeIsolator
 
 Isolate a view by animation
 
+Quick screenshot
+![ScreenShot 1](screenshot.png)
+
+
+### Youtube Video
+Here is a short video showing the animation in a table view:
+[![Video 1](http://img.youtube.com/vi/OCBW07jk0YM/0.jpg)](https://www.youtube.com/watch?v=OCBW07jk0YM)
 
 ## Overview
-
 
 ##### initWithParentView:havingTableView:willStartCompletion:didAnimateCompletion:withCompletion:
 
