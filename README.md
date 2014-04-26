@@ -3,7 +3,6 @@ eLBeeIsolator
 
 Isolate a view by animation
 
-Quick screenshot
 ![screenshot](screenshot.png)
 
 
