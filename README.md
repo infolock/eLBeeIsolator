@@ -4,7 +4,7 @@ eLBeeIsolator
 Isolate a view by animation
 
 Quick screenshot
-![ScreenShot 1](screenshot.png)
+![screenshot](screenshot.png)
 
 
 ### Youtube Video
