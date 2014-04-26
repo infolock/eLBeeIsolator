@@ -1,8 +1,6 @@
 eLBeeIsolator
 =============
 
-Isolate a view by animation
-
 ![screenshot](screenshot.png)
 
 
