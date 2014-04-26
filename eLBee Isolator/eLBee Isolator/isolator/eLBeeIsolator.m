@@ -113,6 +113,7 @@ static CGFloat const ISOLATOR_ANIMATION_DELAY = 0;
 #pragma mark -
 
 +(CGRect)rectForSnapshotView:(UIView *)snapshotView inTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath usingCoordsFromView:(UIView *)parentView {
+
     CGRect tableViewRect = tableView.bounds;
     CGRect cellRect = [tableView rectForRowAtIndexPath:indexPath];
     CGRect snapshotRect = [tableView convertRect:cellRect toView:parentView];
@@ -189,9 +190,7 @@ static CGFloat const ISOLATOR_ANIMATION_DELAY = 0;
 @interface eLBeeIsolator()
 
 @property (nonatomic, copy) NSString *isolatedItemNameTag;
-
-@property (nonatomic, assign) BOOL isPerfomingIsolation;
-@property (nonatomic, assign) BOOL hasPerformedIsolation;
+@property (nonatomic, assign) BOOL isItemBeingIsolated;
 
 @end
 
@@ -201,40 +200,52 @@ static CGFloat const ISOLATOR_ANIMATION_DELAY = 0;
 #pragma mark Init Method(s)
 #pragma mark -
 
--(instancetype)initWithParentView:(UIView *)parentView havingTableView:(UITableView *)tableView willAnimateCompletion:( eLBeeIsolatorWillAnimateCompletion )willAnimateBlock didAnimateCompletion:( eLBeeIsolatorDidAnimateCompletion )didAnimateBlock withCompletion:( eLBeeIsolatorDidIsolateCompletion )didIsolateBlock {
+-(instancetype)initWithParentView:(UIView *)parentView havingTableView:(UITableView *)tableView willStartCompletion:( eLBeeIsolatorWillStartCompletion )willStartBlock didAnimateCompletion:( eLBeeIsolatorDidAnimateCompletion )didAnimateBlock withCompletion:( eLBeeIsolatorDidIsolateCompletion )completionBlock {
 
     self = [super init];
     if( self ) {
 
         _parentView = parentView;
         _tableView  = tableView;
-        _isPerfomingIsolation = NO;
-        _willAnimateBlock = willAnimateBlock;
+        _isItemBeingIsolated = NO;
+        _willStartBlock = willStartBlock;
         _didAnimateBlock = didAnimateBlock;
-        _didIsolateBlock = didIsolateBlock;
+        _completionBlock = completionBlock;
     }
 
     return self;
 }
 
--(instancetype)initWithParentView:(UIView *)parentView havingTableView:(UITableView *)tableView  didAnimateCompletion:( eLBeeIsolatorDidAnimateCompletion )didAnimateBlock withCompletion:( eLBeeIsolatorDidIsolateCompletion )didIsolateBlock {
-    return [self initWithParentView:parentView havingTableView:tableView willAnimateCompletion:nil didAnimateCompletion:didAnimateBlock withCompletion:didIsolateBlock];
+-(instancetype)initWithParentView:(UIView *)parentView havingTableView:(UITableView *)tableView  didAnimateCompletion:( eLBeeIsolatorDidAnimateCompletion )didAnimateBlock withCompletion:( eLBeeIsolatorDidIsolateCompletion )completionBlock {
+    return [self initWithParentView:parentView havingTableView:tableView willStartCompletion:nil didAnimateCompletion:didAnimateBlock withCompletion:completionBlock];
 }
 
--(instancetype)initWithParentView:(UIView *)parentView havingTableView:(UITableView *)tableView withCompletion:( eLBeeIsolatorDidIsolateCompletion )didIsolateBlock {
-    return [self initWithParentView:parentView havingTableView:tableView willAnimateCompletion:nil didAnimateCompletion:nil withCompletion:didIsolateBlock];
+-(instancetype)initWithParentView:(UIView *)parentView havingTableView:(UITableView *)tableView withCompletion:( eLBeeIsolatorDidIsolateCompletion )completionBlock {
+    return [self initWithParentView:parentView havingTableView:tableView willStartCompletion:nil didAnimateCompletion:nil withCompletion:completionBlock];
 }
 
 
 -(instancetype)initWithParentView:(UIView *)parentView havingTableView:(UITableView *)tableView {
-    return [self initWithParentView:parentView havingTableView:tableView willAnimateCompletion:nil didAnimateCompletion:nil withCompletion:nil];
+    return [self initWithParentView:parentView havingTableView:tableView willStartCompletion:nil didAnimateCompletion:nil withCompletion:nil];
 }
 
 
 -(instancetype)initWithParentView:(UIView *)parentView {
-    return [self initWithParentView:parentView havingTableView:nil willAnimateCompletion:nil didAnimateCompletion:nil withCompletion:nil];
+    return [self initWithParentView:parentView havingTableView:nil willStartCompletion:nil didAnimateCompletion:nil withCompletion:nil];
 }
 
+
+#pragma mark - Current Isolated Item
+
+-(UIView *)currentIsolatedItem {
+
+    NSString *tagName = self.isolatedItemNameTag;
+    if( [tagName length] == 0 ) {
+        return nil;
+    }
+    
+    return [self.parentView viewWithNametag:self.isolatedItemNameTag];
+}
 
 #pragma mark -
 #pragma mark Isolate View Method(s)
@@ -261,9 +272,11 @@ static CGFloat const ISOLATOR_ANIMATION_DELAY = 0;
 
     UIView *isolatedCell = [UIView snapshotForCell:cell atIndexPath:indexPath inTableView:self.tableView usingCoordsFromView:self.parentView];
     isolatedCell.nametag = ISOLATED_CELL_NAMETAG;
+
     [self.parentView addSubview:isolatedCell];
 
     self.isolatedItemNameTag = ISOLATED_CELL_NAMETAG;
+
     [self performIsolation];
 }
 
@@ -284,7 +297,6 @@ static CGFloat const ISOLATOR_ANIMATION_DELAY = 0;
 }
 
 -(void)isolateCellForRowAtIndexPath:(NSIndexPath *)indexPath inTableView:(UITableView *)tableView {
-
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     [self isolateCell:cell atIndexPath:indexPath inTableView:tableView];
 }
@@ -294,23 +306,35 @@ static CGFloat const ISOLATOR_ANIMATION_DELAY = 0;
 #pragma mark Deisolation Methods
 #pragma mark -
 
--(void)deisolateCurrentItem {
-    [self performIsolation];
-}
+-(void)deisolateCurrentViewAnimated:(BOOL)animated {
 
--(void)deisolateItem:(UIView *)isolatedItem {
-    
-    [isolatedItem removeFromSuperview];
-//    [self.parentView updateConstraintsIfNeeded];
+    UIView *isolatedView = [self currentIsolatedItem];
+    if( !isolatedView ) {
+        return;
+    }
+
+    self.isItemBeingIsolated = NO;
+
+    if( self.willStartBlock != nil ) {
+        self.willStartBlock( self.isItemBeingIsolated );
+    }
+
+    if( animated ) {
+        [self animateItem:isolatedView];
+    }
+
+    [isolatedView removeFromSuperview];
     [self removeOverlay];
     
-    if( [self.isolatedItemNameTag isEqualToString:ISOLATED_CELL_NAMETAG] && self.tableView ) {
-        [UIView animateWithDuration:0.1 animations:^{
-            self.tableView.alpha = 1.0;
-        }];
-    }
-    
     self.isolatedItemNameTag = nil;
+
+    if( !animated && self.completionBlock != nil ) {
+        self.completionBlock( self.isItemBeingIsolated );
+    }
+}
+
+-(void)deisolateCurrentView {
+    [self deisolateCurrentViewAnimated:NO];
 }
 
 
@@ -320,9 +344,9 @@ static CGFloat const ISOLATOR_ANIMATION_DELAY = 0;
 
 /**
  * Given the name of this method, it may not be immediately obvious what happens here.
- * This method is where hasPerformedIsolation gets an actual truthy value.
+ * This method is where isItemBeingIsolated gets an actual truthy value.
  *
- * When hasPerformedIsolation is set to YES, then the methods called will perform the deIsolation routine
+ * When isItemBeingIsolated is set to YES, then the methods called will perform the deIsolation routine
  * which REMOVES the isolated item.  Otherwise, isolation occurs and the opposite effect occurs.
  *
  * The isolation item is determined by the isolatedItemNameTag (if it was set).  The nameTag property
@@ -338,22 +362,21 @@ static CGFloat const ISOLATOR_ANIMATION_DELAY = 0;
 -(void)performIsolation {
 
     // Sanity check to make sure we don't blow shit up while we're still trying to finish the previos request.
-    if( self.isPerfomingIsolation == YES ) {
+    if( self.isItemBeingIsolated ) {
         return;
     }
 
-    self.isPerfomingIsolation = YES;
+    self.isItemBeingIsolated = YES;
 
-    NSString *tagName = self.isolatedItemNameTag;
-    if( [tagName length] == 0 ) {
+    UIView *item = [self currentIsolatedItem];
+    if( !item ) {
+        self.isItemBeingIsolated = NO;
         return;
     }
 
-    UIView *item = [self.parentView viewWithNametag:self.isolatedItemNameTag];
     item.alpha = 0.1;
-    [self isolateItem: item];
 
-    self.hasPerformedIsolation = !self.hasPerformedIsolation;
+    [self animateItem: item];
 }
 // Anyways, moving on...
 
@@ -368,10 +391,16 @@ static CGFloat const ISOLATOR_ANIMATION_DELAY = 0;
 }
 
 
--(void)isolateItem:(UIView *)isolatedItem {
+-(void)animateItem:(UIView *)isolatedItem {
 
     if( !isolatedItem ) {
         return;
+    }
+
+    __block BOOL isIsolated = self.isItemBeingIsolated == YES;
+
+    if( self.willStartBlock != nil ) {
+        self.willStartBlock( isIsolated );
     }
 
     if( self.shouldCenterInParent ) {
@@ -380,44 +409,28 @@ static CGFloat const ISOLATOR_ANIMATION_DELAY = 0;
 
     CGFloat toAlpha = 0.1;
 
-    if( self.isPerfomingIsolation ) {
+    if( isIsolated ) {
         toAlpha = 1.0;
         [self.parentView bringSubviewToFront: isolatedItem];
     }
 
-    CGFloat scaleTo = !self.hasPerformedIsolation ? ISOLATION_SCALE : DEISOLATION_SCALE;
+    CGFloat scaleTo = !isIsolated ? ISOLATION_SCALE : DEISOLATION_SCALE;
     CGAffineTransform transformAnimation = CGAffineTransformMakeScale(scaleTo, scaleTo);
 
-
-    if( self.willAnimateBlock != nil ) {
-        self.willAnimateBlock( !self.hasPerformedIsolation );
-    }
-
     __weak typeof(self) weakSelf = self;
+
     [UIView animateWithDuration:ISOLATOR_ANIMATION_DURATION delay:ISOLATOR_ANIMATION_DELAY options:UIViewAnimationOptionCurveEaseOut animations:^{
-        self.tableView.alpha = 0.1;
-        [self transformIsolatedItem:isolatedItem usingAnimation:transformAnimation withAlpha:toAlpha ];
-//        [self transformIsolatedItem:isolatedItem usingAnimation:transformAnimation toPoint:itemCenter withAlpha:toAlpha ];
-        [self.parentView updateConstraintsIfNeeded];
+
+        isolatedItem.alpha = toAlpha;
+        isolatedItem.transform = transformAnimation;
 
     } completion:^(BOOL finished) {
-
-        if( self.didAnimateBlock != nil ) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                weakSelf.didAnimateBlock( weakSelf.hasPerformedIsolation );
-            });
-        }
-
-        if( !weakSelf.isPerfomingIsolation ) {
-            [weakSelf.parentView sendSubviewToBack:isolatedItem];
-        }
-
-        weakSelf.tableView.backgroundColor = [UIColor blackColor];
         [weakSelf didAnimateItem:isolatedItem];
     }];
 }
 
 -(void)transformIsolatedItem:( UIView *)isolatedItem usingAnimation:(CGAffineTransform)animation withAlpha:(CGFloat)toAlpha {
+
     isolatedItem.alpha = toAlpha;
     isolatedItem.transform = animation;
 }
@@ -429,26 +442,17 @@ static CGFloat const ISOLATOR_ANIMATION_DELAY = 0;
 
 -(void)didAnimateItem:(UIView *)isolatedItem {
 
-    // When NO, then the item needs to be deisolated ( the isolatedItem, overlay, the world and others destroyed ).
-    if( !self.hasPerformedIsolation ) {
-        [self deisolateItem:isolatedItem];
+    __block BOOL isIsolated = self.isItemBeingIsolated == YES;
+
+    if( self.didAnimateBlock != nil ) {
+        self.didAnimateBlock( isIsolated );
     }
 
-    self.isPerfomingIsolation = NO;
-
-    if( self.didIsolateBlock != nil ) {
-        __weak typeof(self) weakSelf = self;
-
-        dispatch_async(dispatch_get_main_queue(), ^{
-            weakSelf.didIsolateBlock( weakSelf.hasPerformedIsolation );
-        });
+    if( self.completionBlock != nil ) {
+        self.completionBlock( isIsolated );
     }
-}
 
-
--(void)toggleTableViewHidden:(BOOL)shouldHide {
-    self.tableView.hidden = shouldHide;
-    self.tableView.alpha = 0.5;
+    self.isItemBeingIsolated = NO;
 }
 
 

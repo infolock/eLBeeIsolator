@@ -7,7 +7,7 @@
 //
 
 typedef void( ^eLBeeAnimationCompletion)(void);
-typedef void ( ^eLBeeIsolatorWillAnimateCompletion)(BOOL itemIsBeingIsolated);
+typedef void ( ^eLBeeIsolatorWillStartCompletion)(BOOL itemIsBeingIsolated);
 typedef void ( ^eLBeeIsolatorDidAnimateCompletion)(BOOL itemIsBeingIsolated);
 typedef void ( ^eLBeeIsolatorDidIsolateCompletion)(BOOL itemIsBeingIsolated);
 
@@ -17,16 +17,12 @@ typedef void ( ^eLBeeIsolatorDidIsolateCompletion)(BOOL itemIsBeingIsolated);
 
 @interface eLBeeIsolator : NSObject
 
-@property (nonatomic, copy) eLBeeIsolatorWillAnimateCompletion willAnimateBlock;     // A completion block to be fired before animations begin.
+@property (nonatomic, copy) eLBeeIsolatorWillStartCompletion  willStartBlock;   // A completion block to be fired before (de)isolation begin.
 @property (nonatomic, copy) eLBeeIsolatorDidAnimateCompletion didAnimateBlock;  // A completion block to be fired after the (de)isolation of a view is complete
-@property (nonatomic, copy) eLBeeIsolatorDidIsolateCompletion didIsolateBlock;    // Fired just before the (de)isolation of a view is complete ( so that other
-                                                                                // prep/reset animations and/or operations can be fired if needed ).
+@property (nonatomic, copy) eLBeeIsolatorDidIsolateCompletion completionBlock;  // Fired just before the (de)isolation of a view is complete ( so that other prep/reset animations and/or operations can be fired if needed ).
 
-@property (nonatomic, weak) UIView *parentView;         // The primary view that represents the main coordinate system and also where isolation view animations
-                                                        // should occur ( typically self.view )
-
-@property (nonatomic, weak) UITableView *tableView;     // When an isolation view be a UITableViewCell, this tableView will be used to convert the cell's "origin"
-                                                        // to the parentView's coordinate system for proper placement.
+@property (nonatomic, weak) UIView *parentView;       // The primary view that represents the main coordinate system and also where isolation view animations should occur ( typically self.view )
+@property (nonatomic, weak) UITableView *tableView;   // When an isolation view be a UITableViewCell, this tableView will be used to convert the cell's "origin" to the parentView's coordinate system for proper placement.
 
 @property (nonatomic, assign) BOOL shouldCenterInParent;
 
@@ -43,21 +39,21 @@ typedef void ( ^eLBeeIsolatorDidIsolateCompletion)(BOOL itemIsBeingIsolated);
  * NOTE2: A tableView is optional.  This becomes REQUIRED when the view to be isolated is a UITableViewCell.  When this is the case one should ( once again ) 
  * expect a meltdown to occur.
  *
- * @param UIView  parentView                                        @see parentView property def above.
- * @param UITableView tableView                                     @see tableView  property def above.
- * @param eLBeeIsolatorWillAnimateCompletion  willAnimateBlock      @see willAnimateBlock property def above.
- * @param eLBeeIsolationWillFinishCompletion  willFinishBlock       @see willFinishBlock property def above.
- * @param eLBeeIsolationDidFinishCompletion   didFinishBlock        @see didFinishBlock property def above.
+ * @param UIView  parentView                                    @see parentView property def above.
+ * @param UITableView tableView                                 @see tableView  property def above.
+ * @param eLBeeIsolatorWillStartCompletion   willStartBlock     @see willStartBlock property def above.
+ * @param eLBeeIsolatorDidAnimateCompletion  didAnimateBlock    @see didAnimateBlock property def above.
+ * @param eLBeeIsolatorDidIsolateCompletion  completionBlock    @see completionBlock property def above.
  */
--(instancetype)initWithParentView:(UIView *)parentView havingTableView:(UITableView *)tableView willAnimateCompletion:( eLBeeIsolatorWillAnimateCompletion )willAnimateBlock didAnimateCompletion:( eLBeeIsolatorDidAnimateCompletion )willFinishBlock withCompletion:( eLBeeIsolatorDidIsolateCompletion )didIsolateBlock;
+-(instancetype)initWithParentView:(UIView *)parentView havingTableView:(UITableView *)tableView willStartCompletion:( eLBeeIsolatorWillStartCompletion )willStartBlock didAnimateCompletion:( eLBeeIsolatorDidAnimateCompletion )willFinishBlock withCompletion:( eLBeeIsolatorDidIsolateCompletion )completionBlock;
 
 
 //       ,-----------------------------------------------------------------,
 //    -<|        C O N V E I N E N C E    I N I T I A L I Z E R S          |])
 //       `-----------------------------------------------------------------`
 
--(instancetype)initWithParentView:(UIView *)parentView havingTableView:(UITableView *)tableView didAnimateCompletion:( eLBeeIsolatorDidAnimateCompletion )willFinishBlock withCompletion:( eLBeeIsolatorDidIsolateCompletion )didIsolateBlock;
--(instancetype)initWithParentView:(UIView *)parentView havingTableView:(UITableView *)tableView withCompletion:( eLBeeIsolatorDidIsolateCompletion )didIsolateBlock;
+-(instancetype)initWithParentView:(UIView *)parentView havingTableView:(UITableView *)tableView didAnimateCompletion:( eLBeeIsolatorDidAnimateCompletion )willFinishBlock withCompletion:( eLBeeIsolatorDidIsolateCompletion )completionBlock;
+-(instancetype)initWithParentView:(UIView *)parentView havingTableView:(UITableView *)tableView withCompletion:( eLBeeIsolatorDidIsolateCompletion )completionBlock;
 -(instancetype)initWithParentView:(UIView *)parentView havingTableView:(UITableView *)tableView;
 -(instancetype)initWithParentView:(UIView *)parentView;
 
@@ -68,7 +64,6 @@ typedef void ( ^eLBeeIsolatorDidIsolateCompletion)(BOOL itemIsBeingIsolated);
 
 // View
 -(void)isolateView:(UIView *)view;
-
 
 // Cell
 -(void)isolateCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath inTableView:(UITableView *)tableView;
@@ -82,7 +77,9 @@ typedef void ( ^eLBeeIsolatorDidIsolateCompletion)(BOOL itemIsBeingIsolated);
 
 // Other Actions
 -(void)removeOverlay;
--(void)deisolateCurrentItem;
+
+-(void)deisolateCurrentViewAnimated:(BOOL)animated;
+-(void)deisolateCurrentView;
 
 @end
 
