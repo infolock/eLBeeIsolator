@@ -23,7 +23,8 @@ Initializes an allocated **eLBeeIsolator** object using a *Parent View* (**requi
 *didIsolateBlock* - A completion block to be called once isolation of the view is complete.
 
 
-*Alternatives of the above*
+**Additional Initializers**
+
 ```objc
 -(instancetype)initWithParentView:havingTableView:didAnimateCompletion:withCompletion:
 ```
@@ -39,3 +40,10 @@ Initializes an allocated **eLBeeIsolator** object using a *Parent View* (**requi
 ```objc
 -(instancetype)initWithParentView
 ```
+
+
+## Extras Included
+There are a bunch of other helper categories and stuff added to this guy - mainly just to add them to a repo for later use if I wanted em.
+
+### Note
+There are many ways to do this same affect.   A much cleaner/better way would be to just transition to a new View as the animation.  This code is just an alternative to that ( and also just me muxing around ).
