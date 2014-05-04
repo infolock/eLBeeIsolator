@@ -1,8 +1,6 @@
 eLBeeIsolator
 =============
 
-![screenshot](screenshot.png)
-
 
 ### Youtube Video
 Here is a short video showing the animation in a table view:
@@ -68,3 +66,7 @@ So - seek and destroy at will!
 
 ### Note
 There are many ways to do this same affect.   A much cleaner/better way would be to just transition to a new View as the animation.  This code is just an alternative to that ( and also just me muxing around ).
+
+
+![screenshot](screenshot.png)
+
