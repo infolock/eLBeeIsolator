@@ -1,6 +1,8 @@
 eLBeeIsolator
 =============
 
+![Unmaintained](https://img.shields.io/badge/%E2%9A%A0-unmaintained-red.svg?style=flat)
+Yet another Objective-C repo that will remain unmaintained indefinitely or until I can write a Swift version to replace it.
 
 ### Youtube Video
 Here is a short video showing the animation in a table view:
